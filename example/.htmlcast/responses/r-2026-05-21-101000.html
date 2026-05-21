@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>r-2026-05-21-101000 · htmlcast example</title>
+  <link rel="stylesheet" href="../base.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.9.0/build/styles/atom-one-dark.min.css">
+  <script defer src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.9.0/build/highlight.min.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Inter:wght@400;500;600&display=swap">
+</head>
+<body class="standalone">
+  <svg class="icon-defs" aria-hidden="true">
+    <defs>
+      <symbol id="i-prompt" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></symbol>
+      <symbol id="i-tldr" viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M13 2L3 14h8l-1 8 11-13h-9l1-7z"/></symbol>
+      <symbol id="i-answer" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="9" y1="13" x2="15" y2="13"/><line x1="9" y1="17" x2="15" y2="17"/></symbol>
+      <symbol id="i-actions" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></symbol>
+      <symbol id="i-files" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></symbol>
+      <symbol id="i-refs" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></symbol>
+      <symbol id="i-questions" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></symbol>
+      <symbol id="i-next" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></symbol>
+    </defs>
+  </svg>
+
+  <section class="response" id="r-2026-05-21-101000">
+
+    <div class="response-meta">
+      <span class="timestamp">2026-05-21 10:10</span>
+      <span class="meta-sep">·</span>
+      <span class="summary">Code-heavy answer with fenced code blocks, inline code, and language highlighting.</span>
+    </div>
+
+    <section class="answer-summary">
+      <header class="section-header"><svg class="section-icon"><use href="#i-tldr"/></svg><span>TL;DR</span></header>
+      <p>Fenced code blocks render with the <code>atom-one-dark</code> highlight.js theme over a darker pre background that contrasts with the surrounding card. Inline code uses the same monospace font in a subtle pill. This is what a long technical answer looks like end-to-end.</p>
+    </section>
+
+    <section class="response-body">
+      <header class="section-header"><svg class="section-icon"><use href="#i-answer"/></svg><span>Answer</span></header>
+
+      <h3>JavaScript</h3>
+      <p>The scroll-spy in <code>nav.js</code> uses a sliding marker. Here's the core of it, slightly trimmed:</p>
+
+      <pre><code class="language-javascript">function recompute() {
+  if (clickedId !== null) {
+    if (performance.now() &lt; clickLockUntil) return;
+    releaseLock();
+  }
+  const scrollY = window.scrollY || window.pageYOffset;
+  const innerH = window.innerHeight;
+  const totalH = Math.max(
+    document.documentElement.scrollHeight,
+    document.body.scrollHeight
+  );
+  const maxScroll = Math.max(1, totalH - innerH);
+  const progress = Math.min(1, Math.max(0, scrollY / maxScroll));
+  const markerFromTop = innerH * (0.30 + 0.70 * progress);
+  const marker = scrollY + markerFromTop;
+  let activeId = items[0].id;
+  for (const s of items) {
+    const el = document.getElementById(s.id);
+    if (!el) continue;
+    const top = el.getBoundingClientRect().top + scrollY;
+    if (top &lt;= marker) activeId = s.id;
+    else break;
+  }
+  linkLis.forEach((li, id) =&gt; li.classList.toggle('active', id === activeId));
+}</code></pre>
+
+      <h3>CSS</h3>
+      <p>The card primitive shared by every section type:</p>
+
+      <pre><code class="language-css">.response-meta,
+.user-prompt,
+.answer-summary,
+.response-body,
+.actions-taken,
+.generated-files,
+.references,
+.questions-for-user,
+.next-steps {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 18px 22px;
+}</code></pre>
+
+      <h3>HTML</h3>
+      <p>Each response is a fully self-contained page. The skeleton of one:</p>
+
+      <pre><code class="language-html">&lt;!doctype html&gt;
+&lt;html lang="en"&gt;
+&lt;head&gt;
+  &lt;meta charset="utf-8"&gt;
+  &lt;link rel="stylesheet" href="../base.css"&gt;
+&lt;/head&gt;
+&lt;body class="standalone"&gt;
+  &lt;svg class="icon-defs"&gt;...&lt;/svg&gt;
+  &lt;section class="response" id="r-..."&gt;
+    ...
+  &lt;/section&gt;
+  &lt;nav id="section-nav" class="section-nav"&gt;&lt;/nav&gt;
+  &lt;script defer src="../nav.js"&gt;&lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+
+      <h3>Shell</h3>
+      <p>And to install everything globally:</p>
+
+      <pre><code class="language-bash">git clone https://github.com/&lt;your-fork&gt;/claude-htmlcast.git
+cd claude-htmlcast
+./install.sh
+
+# Then in any project:
+# /htmlcast-init
+# live-server .htmlcast/</code></pre>
+    </section>
+
+  </section>
+
+  <nav id="section-nav" class="section-nav" aria-label="Jump to section"></nav>
+
+  <script defer src="../nav.js"></script>
+  <script>document.addEventListener('DOMContentLoaded',()=>{if(window.hljs)window.hljs.highlightAll();});</script>
+</body>
+</html>

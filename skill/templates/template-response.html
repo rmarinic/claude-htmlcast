@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>r-{{ID}} · htmlcast</title>
+  <link rel="stylesheet" href="../base.css">
+
+  <!-- Code highlighting (CDN) -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.9.0/build/styles/atom-one-dark.min.css">
+  <script defer src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.9.0/build/highlight.min.js"></script>
+
+  <!-- JetBrains Mono + Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Inter:wght@400;500;600&display=swap">
+</head>
+<body class="standalone">
+
+  <!--
+    Icon symbol library — must be inlined per response file because each
+    response is loaded in its own iframe document and cannot reach symbols
+    defined in the parent. Keep all 8 symbols even when the response only
+    uses some of them: nav.js references them by id.
+  -->
+  <svg class="icon-defs" aria-hidden="true">
+    <defs>
+      <symbol id="i-prompt" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></symbol>
+      <symbol id="i-tldr" viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M13 2L3 14h8l-1 8 11-13h-9l1-7z"/></symbol>
+      <symbol id="i-answer" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="9" y1="13" x2="15" y2="13"/><line x1="9" y1="17" x2="15" y2="17"/></symbol>
+      <symbol id="i-actions" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></symbol>
+      <symbol id="i-files" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></symbol>
+      <symbol id="i-refs" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></symbol>
+      <symbol id="i-questions" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></symbol>
+      <symbol id="i-next" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></symbol>
+    </defs>
+  </svg>
+
+  <!--
+    Per-response card structure. The two REQUIRED cards are .response-meta
+    and .response-body. All other section cards are OPTIONAL — emit only
+    when there is real, non-trivial content. A section card with a header
+    and no body is worse than no card at all. Cards may appear in any order
+    but the convention below (prompt → TL;DR → answer → actions → files →
+    references → questions → next) reads well top-to-bottom.
+  -->
+
+  <section class="response" id="r-{{ID}}">
+
+    <!-- REQUIRED: status dot + timestamp + one-line summary -->
+    <div class="response-meta">
+      <span class="timestamp">{{TIMESTAMP}}</span>
+      <span class="meta-sep">·</span>
+      <span class="summary">{{ONE_LINE_SUMMARY}}</span>
+    </div>
+
+    <!-- OPTIONAL: quote the user's message back -->
+    <section class="user-prompt">
+      <header class="section-header"><svg class="section-icon"><use href="#i-prompt"/></svg><span>Prompt</span></header>
+      <blockquote>verbatim or lightly trimmed user message</blockquote>
+    </section>
+
+    <!-- OPTIONAL: 1–3 sentence TL;DR in a blue-gradient callout -->
+    <section class="answer-summary">
+      <header class="section-header"><svg class="section-icon"><use href="#i-tldr"/></svg><span>TL;DR</span></header>
+      <p>the answer in 1–3 sentences</p>
+    </section>
+
+    <!-- REQUIRED: main rendered markdown body -->
+    <section class="response-body">
+      <header class="section-header"><svg class="section-icon"><use href="#i-answer"/></svg><span>Answer</span></header>
+      <!-- headings, paragraphs, lists, <pre><code class="language-…">…</code></pre> -->
+    </section>
+
+    <!-- OPTIONAL: concrete state changes this turn -->
+    <section class="actions-taken">
+      <header class="section-header"><svg class="section-icon"><use href="#i-actions"/></svg><span>Actions taken</span></header>
+      <ul>
+        <li>edited <code>path/to/file.ext</code> — what changed</li>
+        <li>ran <code>command --flag</code></li>
+      </ul>
+    </section>
+
+    <!-- OPTIONAL: newly created/regenerated files. Paths are relative to
+         .htmlcast/responses/, so use "../foo.png" to reach project files. -->
+    <section class="generated-files">
+      <header class="section-header"><svg class="section-icon"><use href="#i-files"/></svg><span>Files generated</span></header>
+      <ul>
+        <li><img src="../path/to/image.png" alt="…"></li>
+        <li><a href="../path/to/file.ext">file.ext</a></li>
+      </ul>
+    </section>
+
+    <!-- OPTIONAL: labeled pointers — files / memory / external / docs -->
+    <section class="references">
+      <header class="section-header"><svg class="section-icon"><use href="#i-refs"/></svg><span>References</span></header>
+      <ul>
+        <li><span class="ref-label">File</span><a href="../path/to/file.ext">path/to/file.ext</a></li>
+        <li><span class="ref-label">Memory</span>name-of-memory-entry</li>
+        <li><span class="ref-label">External</span><a href="https://example.com">title</a></li>
+      </ul>
+    </section>
+
+    <!-- OPTIONAL: ONLY render when there are genuine questions back to the
+         user that would improve the next step. Warm-orange accent. -->
+    <section class="questions-for-user">
+      <header class="section-header"><svg class="section-icon"><use href="#i-questions"/></svg><span>Questions for you</span></header>
+      <ol>
+        <li>a specific, answerable question (not a clarification you could resolve yourself)</li>
+      </ol>
+    </section>
+
+    <!-- OPTIONAL: concrete follow-ups the user might take -->
+    <section class="next-steps">
+      <header class="section-header"><svg class="section-icon"><use href="#i-next"/></svg><span>Next steps</span></header>
+      <ul>
+        <li>verify X by doing Y</li>
+        <li>if Z fails, try W</li>
+      </ul>
+    </section>
+
+  </section>
+
+  <!-- Floating right-side quick-jump nav. Built by nav.js from whichever
+       cards above were rendered (auto-hides if fewer than 2). -->
+  <nav id="section-nav" class="section-nav" aria-label="Jump to section"></nav>
+
+  <script defer src="../nav.js"></script>
+  <script>document.addEventListener('DOMContentLoaded',()=>{if(window.hljs)window.hljs.highlightAll();});</script>
+</body>
+</html>

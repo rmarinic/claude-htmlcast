@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>H/V · {{PROJECT_NAME}}</title>
+
+  <!-- Inline SVG favicon: rounded blue tile with the H/V mark. -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><defs><linearGradient id='g' x1='0' y1='0' x2='1' y2='1'><stop offset='0' stop-color='%236b93ff'/><stop offset='1' stop-color='%234c7dff'/></linearGradient></defs><rect width='32' height='32' rx='7' fill='url(%23g)'/><text x='16' y='21' font-family='ui-monospace,SFMono-Regular,Menlo,Consolas,monospace' font-size='13' font-weight='700' fill='%23ffffff' text-anchor='middle' letter-spacing='-0.5'>H/V</text></svg>">
+
+  <link rel="stylesheet" href="base.css">
+  <style>
+    /* Skeleton layout: sticky sidebar + iframe content pane. */
+    html, body { height: 100%; margin: 0; }
+    body.frame { display: grid; grid-template-columns: var(--sidebar-w) 1fr; }
+    iframe.content {
+      border: 0;
+      width: 100%;
+      height: 100vh;
+      background: var(--bg);
+      display: block;
+    }
+  </style>
+</head>
+<body class="frame">
+
+  <!--
+    htmlcast skeleton. The browser loads each response file natively via
+    <iframe> — no fetch(), no fragment injection, no race against live-server.
+    Each file in responses/ is a fully self-contained HTML page that links
+    back to ./base.css and ./nav.js.
+
+    To add a new response:
+      1. Write a new responses/r-YYYY-MM-DD-HHMMSS.html using
+         template-response.html as the starting point.
+      2. Prepend a new <li> at the top of <ul class="sidebar-list"> below
+         (the <a> link MUST include target="content").
+      3. Update the default <iframe src="..."> below to the new filename so a
+         fresh page load lands on the newest response.
+  -->
+
+  <aside class="sidebar">
+    <header class="sidebar-header">
+      <h1>Claude</h1>
+      <p class="subtitle">htmlcast · iframe</p>
+      <span class="project-chip">{{PROJECT_NAME}}</span>
+    </header>
+
+    <div class="sidebar-section">
+      <h2>Responses</h2>
+      <ul class="sidebar-list">
+        <!-- {{SIDEBAR_ENTRIES}} — newest first; first item gets class="current".
+             Pattern:
+               <li class="current">
+                 <a target="content" href="responses/r-YYYY-MM-DD-HHMMSS.html">
+                   <span class="time">HH:MM</span>
+                   <span class="sum">one-line summary</span>
+                 </a>
+               </li>
+        -->
+      </ul>
+    </div>
+
+    <div class="sidebar-section">
+      <h2>Archive</h2>
+      <ul class="archive-list">
+        <!-- {{ARCHIVE_ENTRIES}} — older entries moved here when the active
+             list exceeds the trim threshold (default 20). Same shape as above. -->
+      </ul>
+    </div>
+  </aside>
+
+  <iframe class="content" name="content" src="about:blank"></iframe>
+
+  <script>
+    // Highlight the sidebar entry whose href matches the iframe's current URL.
+    // Runs on initial iframe load AND every time a sidebar link replaces it.
+    // Falls back silently when the iframe is cross-origin (e.g. about:blank).
+    const iframe = document.querySelector('iframe.content');
+    function syncCurrent() {
+      let path = '';
+      try { path = iframe.contentWindow.location.pathname; } catch (e) { return; }
+      const file = path.split('/').pop();
+      document.querySelectorAll('.sidebar-list > li, .archive-list > li').forEach((li) => {
+        const href = li.querySelector('a')?.getAttribute('href') || '';
+        li.classList.toggle('current', href.endsWith(file));
+      });
+    }
+    iframe.addEventListener('load', syncCurrent);
+  </script>
+</body>
+</html>

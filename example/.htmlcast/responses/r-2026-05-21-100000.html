@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>r-2026-05-21-100000 · htmlcast example</title>
+  <link rel="stylesheet" href="../base.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.9.0/build/styles/atom-one-dark.min.css">
+  <script defer src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.9.0/build/highlight.min.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Inter:wght@400;500;600&display=swap">
+</head>
+<body class="standalone">
+  <svg class="icon-defs" aria-hidden="true">
+    <defs>
+      <symbol id="i-prompt" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></symbol>
+      <symbol id="i-tldr" viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M13 2L3 14h8l-1 8 11-13h-9l1-7z"/></symbol>
+      <symbol id="i-answer" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="9" y1="13" x2="15" y2="13"/><line x1="9" y1="17" x2="15" y2="17"/></symbol>
+      <symbol id="i-actions" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></symbol>
+      <symbol id="i-files" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></symbol>
+      <symbol id="i-refs" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></symbol>
+      <symbol id="i-questions" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></symbol>
+      <symbol id="i-next" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></symbol>
+    </defs>
+  </svg>
+
+  <section class="response" id="r-2026-05-21-100000">
+
+    <div class="response-meta">
+      <span class="timestamp">2026-05-21 10:00</span>
+      <span class="meta-sep">·</span>
+      <span class="summary">Demo response showing every card type in the htmlcast skill — Prompt / TL;DR / Answer / Actions / Files / References / Questions / Next.</span>
+    </div>
+
+    <section class="user-prompt">
+      <header class="section-header"><svg class="section-icon"><use href="#i-prompt"/></svg><span>Prompt</span></header>
+      <blockquote>Show me what every card type in htmlcast actually looks like rendered, so I can see the full visual vocabulary before deciding whether to install it.</blockquote>
+    </section>
+
+    <section class="answer-summary">
+      <header class="section-header"><svg class="section-icon"><use href="#i-tldr"/></svg><span>TL;DR</span></header>
+      <p>This is a fully populated example response. Every optional card type appears below — Prompt (above), TL;DR (this card), Answer (next), Actions, Files, References, Questions, Next. The floating nav on the right edge of the viewport lets you jump between them; click an entry or scroll and watch the active highlight follow.</p>
+    </section>
+
+    <section class="response-body">
+      <header class="section-header"><svg class="section-icon"><use href="#i-answer"/></svg><span>Answer</span></header>
+
+      <h3>Layout primitives</h3>
+      <p>Each card lives in a rounded dark panel with a small uppercase header (icon + label) separated from the body by a thin border. Cards stack vertically with consistent spacing. Long content scrolls inside the iframe; the sidebar to the left stays fixed.</p>
+
+      <h3>Prose styling</h3>
+      <p>Paragraphs use the Inter font at 15&nbsp;px with a generous line height. <strong>Bold</strong> and <em>italic</em> emphasis read clearly against the dark background, and <a href="#">inline links</a> use the royal-blue accent with a dashed underline that solidifies on hover.</p>
+
+      <ul>
+        <li>Unordered lists indent with a hanging bullet</li>
+        <li>Multiple items get consistent vertical rhythm</li>
+        <li>Nested content stays readable</li>
+      </ul>
+
+      <ol>
+        <li>Ordered lists use the same spacing</li>
+        <li>The numbers inherit the body color</li>
+      </ol>
+
+      <h4>Inline code and callouts</h4>
+      <p>Inline code like <code>const foo = bar()</code> uses JetBrains Mono in a subtle pill. The <code>.callout</code> helper highlights short emphasized blocks inside the body:</p>
+
+      <div class="callout">
+        <p>This is what a callout looks like — useful for "do this" quotes, recommended replies, or any short emphasized text that needs to stand out from the surrounding prose.</p>
+      </div>
+
+      <h3>Tables and quotes</h3>
+      <table>
+        <thead>
+          <tr><th>Card</th><th>When to use</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><code>.user-prompt</code></td><td>Non-trivial prompts you'll re-read later</td></tr>
+          <tr><td><code>.answer-summary</code></td><td>Bodies longer than ~6 sentences</td></tr>
+          <tr><td><code>.actions-taken</code></td><td>When you modified state</td></tr>
+        </tbody>
+      </table>
+
+      <blockquote>
+        Block quotes use a left border accent in a muted color, distinguishing them from the body text without shouting.
+      </blockquote>
+    </section>
+
+    <section class="actions-taken">
+      <header class="section-header"><svg class="section-icon"><use href="#i-actions"/></svg><span>Actions taken</span></header>
+      <ul>
+        <li>created <code>example/.htmlcast/index.html</code> — skeleton page</li>
+        <li>created <code>example/.htmlcast/responses/r-2026-05-21-100000.html</code> — this demo response</li>
+        <li>copied <code>skill/assets/base.css</code> and <code>skill/assets/nav.js</code> into the example folder</li>
+      </ul>
+    </section>
+
+    <section class="generated-files">
+      <header class="section-header"><svg class="section-icon"><use href="#i-files"/></svg><span>Files generated</span></header>
+      <ul>
+        <li><a href="../index.html">example/.htmlcast/index.html</a></li>
+        <li><a href="r-2026-05-21-100000.html">example/.htmlcast/responses/r-2026-05-21-100000.html</a></li>
+      </ul>
+    </section>
+
+    <section class="references">
+      <header class="section-header"><svg class="section-icon"><use href="#i-refs"/></svg><span>References</span></header>
+      <ul>
+        <li><span class="ref-label">Docs</span><a href="../../../docs/ARCHITECTURE.md">docs/ARCHITECTURE.md</a> — why iframe-skeleton over fetch</li>
+        <li><span class="ref-label">Docs</span><a href="../../../docs/CARD_TYPES.md">docs/CARD_TYPES.md</a> — reference for every card class</li>
+        <li><span class="ref-label">File</span><a href="../../../skill/SKILL.md">skill/SKILL.md</a> — the rules Claude follows</li>
+        <li><span class="ref-label">External</span><a href="https://github.com/tapio/live-server">tapio/live-server</a> — the recommended viewer</li>
+      </ul>
+    </section>
+
+    <section class="questions-for-user">
+      <header class="section-header"><svg class="section-icon"><use href="#i-questions"/></svg><span>Questions for you</span></header>
+      <ol>
+        <li>Do you want a second monitor for this, or are you running it on one display alongside the terminal?</li>
+        <li>Should htmlcast be on by default for every project, or opt-in per project via <code>/htmlcast-init</code>?</li>
+      </ol>
+    </section>
+
+    <section class="next-steps">
+      <header class="section-header"><svg class="section-icon"><use href="#i-next"/></svg><span>Next steps</span></header>
+      <ul>
+        <li>Open the other two example responses from the sidebar to see the minimal and code-heavy variants.</li>
+        <li>Try the floating nav: click any entry on the right edge, or scroll and watch the active highlight track your position.</li>
+        <li>If you like what you see, run <code>./install.ps1</code> (or <code>./install.sh</code>) from the repo root.</li>
+      </ul>
+    </section>
+
+  </section>
+
+  <nav id="section-nav" class="section-nav" aria-label="Jump to section"></nav>
+
+  <script defer src="../nav.js"></script>
+  <script>document.addEventListener('DOMContentLoaded',()=>{if(window.hljs)window.hljs.highlightAll();});</script>
+</body>
+</html>
